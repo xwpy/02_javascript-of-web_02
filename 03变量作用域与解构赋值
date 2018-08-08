@@ -1,0 +1,57 @@
+//笔记源于大神廖雪峰javascript
+一 ：变量提升
+
+javascript 函数有一个特点，它会先扫描整个函数体的语句，把所有声明的函数变量“提升”到函数顶部
+function foo(){
+    var x = "hello," + y;
+    console.log(x);
+    var y = "Bob";
+}
+fool();
+这个代码对于jacascript解释器而言，相对于：
+function  foo(){
+    var y;//提升变量y的声明，此时y =  underfine 
+    var x = "hello"+y;
+    console.log(x);
+    var y = "Bob";
+    }
+注意：由于JavaScript的这一怪异的“特性”，我们在函数内部定义变量时，请严格遵守“在函数内部首先申明所有变量”这一规则。
+最常见的做法是用一个var申明函数内部用到的所有变量。
+ 
+二： 名字空间
+window：javascript默认的全局对象
+全局作用域的变量实际上被绑定到window的一个属性
+
+全局变量会绑定到window上，不同的JavaScript文件如果使用了相同的全局变量，或者定义了相同名字的顶层函数，都会造成命名冲突，并且很难被发现。
+
+减少冲突的一个方法是把自己的所有变量和函数全部绑定到一个全局变量中
+ 
+var MYAPP ={};//创建一个对象
+MYAPP.name = 'xiewu';
+MYAPP.version = 1.0;
+
+MYAPP.foo = function(){
+    return "foo";
+}
+故把自己的代码全部放入唯一的名字空间MYAPP中，会大大减少全局变量冲突的可能。
+ 
+三 ：局部作用域
+由于JavaScript的变量作用域实际上是函数内部，我们在for循环等语句块中是无法定义具有局部作用域的变量的：
+function foo() {
+    for (var i=0; i<100; i++) {
+        //
+    }
+    i += 100; // 仍然可以引用变量i
+}
+为了解决这一问题，ES6引入新的关键字let
+function foo() {
+    for (let i=0; i<100; i++) {
+        //
+    }
+    i += 100; // 仍然可以引用变量i
+}
+
+ 
+四 ：常量
+let 和 var 都是声明变量作用的
+那么 const  就是用来声明常量，也具有块级作用域的作用
